@@ -3,6 +3,7 @@ import time
 import random
 
 pygame.init()
+crash_sound= pygame.mixer.Sound("crash.wav")
 
 
 
@@ -15,6 +16,7 @@ white = (255, 255, 255)
 
 red = (200, 0, 0)
 green = (0, 200, 0)
+skyblue =(0,255,255)
 
 bright_red = (255, 0, 0)
 bright_green = (0, 255, 0)
@@ -68,9 +70,10 @@ def text_objects(text, font):
 
 
 def crash():
-
+    pygame.mixer.Sound.play(crash_sound)
+    pygame.mixer.music.stop()
     largeText = pygame.font.SysFont("comicsansms", 115)
-    TextSurf, TextRect = text_objects("You Crashed", largeText)
+    TextSurf, TextRect = text_objects("you crashed", largeText)
     TextRect.center = ((display_width / 2), (display_height / 2))
     gameDisplay.blit(TextSurf, TextRect)
 
@@ -113,10 +116,12 @@ def quitgame():
 
 def unpause():
     global pause
+    pygame.mixer.music.unpause()
     pause = False
 
 
 def paused():
+    pygame.mixer.music.pause()
     largeText = pygame.font.SysFont("comicsansms", 115)
     TextSurf, TextRect = text_objects("Paused", largeText)
     TextRect.center = ((display_width / 2), (display_height / 2))
@@ -164,6 +169,8 @@ def game_intro():
 def game_loop():
     global pause
 
+    pygame.mixer.music.load('dan.wav')
+    pygame.mixer.music.play(-1)
     x = (display_width * 0.45)
     y = (display_height * 0.8)
 
@@ -202,7 +209,7 @@ def game_loop():
                     x_change = 0
 
         x += x_change
-        gameDisplay.fill(white)
+        gameDisplay.fill(skyblue)
 
         # things(thingx, thingy, thingw, thingh, color)
         things(thing_startx, thing_starty, thing_width, thing_height, block_color)
